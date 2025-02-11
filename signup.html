@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta Tags for Responsive Design (disables zooming) -->
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0,
+             initial-scale=1.0,
+             maximum-scale=1.0,
+             user-scalable=no"
+  />
+
+  <title>Gala - Login or Sign Up</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Roboto and Open Sans -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Custom Styles -->
+  <style>
+    body {
+      font-family: 'Roboto', 'Open Sans', sans-serif;
+      transition: opacity 0.3s ease-in-out; /* Smooth transition for body opacity */
+    }
+    #loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+      display: none; /* Hidden by default */
+      justify-content: center;
+      align-items: center;
+      z-index: 50; /* Ensure it's on top of other content */
+    }
+
+    .spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body class="bg-white text-black opacity-100"> <!-- Initial opacity set to 100 -->
+
+  <!-- Loading Overlay -->
+  <div id="loading-overlay" class="flex">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Container for the entire layout -->
+  <div class="min-h-screen flex flex-col">
+    <!-- Top Bar with 'X' icon -->
+    <header class="flex items-center p-4 border-b border-gray-200">
+      <!-- X icon, can be replaced with an actual close action if needed -->
+      <button class="mr-auto">
+        <svg
+          class="w-6 h-6 text-gray-700"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col justify-center p-6">
+      <!-- Title -->
+      <h1 class="text-2xl font-bold mb-6 text-center">Log in or sign up to Gala</h1>
+
+      <!-- Card Container -->
+      <div class="w-full max-w-md mx-auto">
+        <!-- Email Login -->
+        <div class="bg-white p-4 mb-4 rounded-md border border-gray-100 shadow-sm">
+          <!-- Email Input -->
+          <label for="email" class="block mb-2 text-sm font-medium text-gray-700">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            placeholder="Enter your email"
+            class="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-1 focus:ring-[#017dd1]"
+            required
+          />
+
+          <!-- Password Input -->
+          <label for="password" class="block mt-4 mb-2 text-sm font-medium text-gray-700">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+            class="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-1 focus:ring-[#017dd1]"
+            required
+          />
+
+          <!-- Info Text -->
+          <p class="text-sm text-gray-500 mt-2 mb-4">
+            A verification email will be sent to confirm your registration.
+          </p>
+
+          <!-- Continue Button (Email) -->
+          <button
+            id="email-login-button"
+            class="w-full py-3 rounded-md bg-[#017dd1] text-white font-semibold"
+          >
+            Continue with Email
+          </button>
+        </div>
+
+        <!-- OR Separator -->
+        <div class="my-4 text-center">
+          <span class="inline-block px-2 text-gray-400">or</span>
+        </div>
+
+        <!-- Social Login Buttons -->
+        <div class="space-y-2">
+          <!-- Continue with Facebook -->
+          <button
+            id="facebook-login-button"
+            class="w-full py-3 border border-gray-300 text-gray-700 rounded-md flex items-center justify-center font-medium"
+          >
+            Continue with Facebook
+          </button>
+
+          <!-- Continue with Google -->
+          <button
+            id="google-login-button"
+            class="w-full py-3 border border-gray-300 text-gray-700 rounded-md flex items-center justify-center font-medium"
+          >
+            Continue with Google
+          </button>
+
+          <!-- Continue with Apple -->
+          <button
+            id="apple-login-button"
+            class="w-full py-3 border border-gray-300 text-gray-700 rounded-md flex items-center justify-center font-medium"
+          >
+            Continue with Apple
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Firebase JS SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+  <!-- Initialize Firebase -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBe9a58zaQCrBSGeWwcIVa_PnZABoH6zV4",
+      authDomain: "tudds-ccd0wn.firebaseapp.com",
+      databaseURL: "https://tudds-ccd0wn-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "tudds-ccd0wn",
+      storageBucket: "tudds-ccd0wn.appspot.com",
+      messagingSenderId: "786974954352",
+      appId: "1:786974954352:web:8cdc279d2e7dc1fb9bb5b5",
+      measurementId: "G-E1RZQYQXQN"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+  </script>
+
+  <!-- JS Functions -->
+  <script>
+    const loadingOverlay = document.getElementById('loading-overlay');
+
+    function showLoading() {
+      loadingOverlay.style.display = 'flex';
+      document.body.style.opacity = '0.8'; // Reduce body opacity during loading for visual feedback
+    }
+
+    function hideLoading() {
+      loadingOverlay.style.display = 'none';
+      document.body.style.opacity = '1'; // Restore body opacity
+    }
+
+
+    async function signUpWithEmail() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        alert('Please enter both email and password.');
+        return;
+      }
+
+      showLoading(); // Show loading before starting signup
+
+      try {
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        await userCredential.user.sendEmailVerification();
+        alert('Verification email sent! Please check your inbox before logging in.');
+        // Redirect to index.html after successful registration
+        hideLoading(); // Hide loading after successful signup
+        window.location.href = 'index.html';
+
+
+      } catch (error) {
+        console.error(error);
+        alert(error.message);
+        hideLoading(); // Hide loading if error occurs
+      }
+    }
+
+    async function signInWithGoogle() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      showLoading(); // Show loading before Google sign-in
+
+      try {
+        const result = await auth.signInWithPopup(provider);
+        alert('Google sign-in successful! ' + result.user.email);
+        // Redirect to index.html after successful sign-in
+        hideLoading(); // Hide loading after successful Google sign-in
+        window.location.href = 'index.html';
+      } catch (error) {
+        console.error(error);
+        alert(error.message);
+        hideLoading(); // Hide loading if error occurs
+      }
+    }
+
+    async function signInWithFacebook() {
+      const provider = new firebase.auth.FacebookAuthProvider();
+      showLoading(); // Show loading before Facebook sign-in
+      try {
+        const result = await auth.signInWithPopup(provider);
+        alert('Facebook sign-in successful! ' + result.user.displayName);
+        // Redirect to index.html after successful sign-in
+        hideLoading(); // Hide loading after successful Facebook sign-in
+        window.location.href = 'index.html';
+      } catch (error) {
+        console.error(error);
+        alert(error.message);
+        hideLoading(); // Hide loading if error occurs
+      }
+    }
+
+    async function signInWithApple() {
+      alert('Apple Sign-In requires server-side setup.');
+    }
+
+    // Attach event listeners
+    document.getElementById('email-login-button').addEventListener('click', signUpWithEmail);
+    document.getElementById('google-login-button').addEventListener('click', signInWithGoogle);
+    document.getElementById('facebook-login-button').addEventListener('click', signInWithFacebook);
+    document.getElementById('apple-login-button').addEventListener('click', signInWithApple);
+  </script>
+</body>
+</html>
