@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gala User Profile</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-color: #F7F7F7;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Header resembling Airbnb style but using a light blue background */
+    header {
+      background-color: #ADD8E6;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 32px;
+      font-weight: bold;
+    }
+    
+    /* Container for the user profile card */
+    .profile-container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    
+    /* Profile Image styling */
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #ADD8E6;
+      margin: 0 auto;
+      display: block;
+    }
+    
+    /* User information styling */
+    .profile-info {
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    .profile-info h1 {
+      margin: 10px 0;
+      font-size: 28px;
+      color: #333;
+    }
+    
+    .profile-info p {
+      margin: 5px 0;
+      font-size: 16px;
+      color: #777;
+    }
+    
+    /* Action buttons styled with BG image of the Gala logo */
+    .action-buttons {
+      text-align: center;
+      margin-top: 30px;
+    }
+    
+    .action-buttons button {
+      background-color: transparent;
+      background-image: url('gala-logo.png'); /* Replace with actual logo path */
+      background-size: cover;
+      background-repeat: no-repeat;
+      border: none;
+      width: 150px;
+      height: 50px;
+      margin: 0 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      position: relative;
+      color: white;
+      font-size: 16px;
+    }
+    
+    /* Button text in center overlay */
+    .action-buttons button::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Users list styling */
+    .users-section {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+
+    .users-section h2 {
+      font-size: 24px;
+      color: #333;
+      text-align: center;
+    }
+
+    .users-section ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .users-section li {
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+      font-size: 16px;
+      color: #555;
+    }
+
+    @media (max-width: 600px) {
+      .action-buttons button {
+        width: 120px;
+        height: 40px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Gala
+  </header>
+  <div class="profile-container">
+    <img src="profile-placeholder.jpg" alt="Profile Picture" class="profile-img">
+    <div class="profile-info">
+      <h1>John Doe</h1>
+      <p>Traveler. Host. Adventurer.</p>
+    </div>
+    <div class="action-buttons">
+      <button data-text="Edit Profile"></button>
+      <button data-text="Messages"></button>
+    </div>
+  </div>
+  
+  <div class="users-section">
+    <h2>Users Data</h2>
+    <ul id="usersList"></ul>
+  </div>
+
+  <!-- Firebase and users fetch script -->
+  <script type="module">
+    // Import Firebase modules from CDN (Firebase JS SDK v9 modular style)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+    // Firebase configuration object
+    const firebaseConfig = {
+      apiKey: "AIzaSyBe9a58zaQCrBSGeWwcIVa_PnZABoH6zV4",
+      authDomain: "tudds-ccd0wn.firebaseapp.com",
+      databaseURL: "https://tudds-ccd0wn-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "tudds-ccd0wn",
+      storageBucket: "tudds-ccd0wn.appspot.com",
+      messagingSenderId: "786974954352",
+      appId: "1:786974954352:web:339d9a244703877b9bb5b5",
+      measurementId: "G-01B9K2FSBQ"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    // Initialize Firestore
+    const db = getFirestore(app);
+
+    // Function to fetch data from the 'users' collection in Firestore
+    async function fetchUsersData() {
+      try {
+        const usersCol = collection(db, "users");
+        const snapshot = await getDocs(usersCol);
+        // Map the users data into an array of user objects
+        const usersData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        console.log("Fetched users data:", usersData);
+        // Display the users data on the page
+        displayUsers(usersData);
+      } catch (error) {
+        console.error("Error fetching users data:", error);
+      }
+    }
+
+    // Function to display the users data inside the unordered list
+    function displayUsers(users) {
+      const usersListElement = document.getElementById("usersList");
+      users.forEach(user => {
+        const li = document.createElement("li");
+        li.textContent = `User ID: ${user.id}, Name: ${user.name || "N/A"}`;
+        usersListElement.appendChild(li);
+      });
+    }
+
+    // Execute the data fetch when the script loads
+    fetchUsersData();
+  </script>
+</body>
+</html>
