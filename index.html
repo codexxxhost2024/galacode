@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Prevent zooming out and ensure full-width on mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Property Listings (Mobile First)</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f0f0f0;
+    }
+    .property-card {
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      background-color: white;
+    }
+    .property-image {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+    }
+    .property-details {
+      padding: 12px; /* Reduced padding */
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <!-- Top Bar (Mobile-Friendly) -->
+  <header class="bg-white shadow-md p-4 flex items-center justify-between">
+    <!-- Left Icon (Hamburger Menu) -->
+    <div>
+      <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </div>
+    <!-- Search Input -->
+    <div class="flex-grow text-center px-2">
+      <input type="text" placeholder="Start your search" class="w-full rounded-full py-2 px-4 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    </div>
+    <!-- Right Icon (Notification) -->
+    <div>
+      <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.766 6.879 2.004M15.121 2.196A13.937 13.937 0 0112 8c-2.5 0-4.847-.766-6.879-2.004M12 10a2 2 0 100-4 2 2 0 000 4z"></path>
+      </svg>
+    </div>
+  </header>
+
+  <!-- Tabs (Mobile-Friendly) -->
+  <nav class="bg-white shadow-sm p-2 flex justify-around">
+    <a href="#" class="text-gray-700 hover:text-blue-500 font-medium">Cabins</a>
+    <a href="#" class="text-gray-700 hover:text-blue-500">Icons</a>
+    <a href="#" class="text-gray-700 hover:text-blue-500">Farms</a>
+    <a href="#" class="text-gray-700 hover:text-blue-500">Lakefront</a>
+  </nav>
+
+  <!-- Filter Section (Mobile-Friendly) -->
+  <div class="bg-white p-4 border-b border-gray-200">
+    <div class="flex items-center justify-between">
+      <span>Display total price</span>
+      <label class="relative inline-flex items-center cursor-pointer">
+        <input type="checkbox" value="" class="sr-only peer">
+        <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+      </label>
+    </div>
+    <p class="text-sm text-gray-500">Includes all fees, before taxes</p>
+  </div>
+
+  <!-- Property Listing Container (Mobile-First, 2-per-row) -->
+  <main class="container mx-auto py-4 px-4">
+    <div class="grid grid-cols-2 gap-4">
+      <!-- Real properties from Firebase will be prepended here dynamically.
+           Then, placeholder property cards are appended below. -->
+    </div>
+  </main>
+
+  <!-- Bottom Navigation Bar (Mobile-Friendly) -->
+  <nav class="fixed bottom-0 left-0 w-full bg-white shadow-lg p-3 flex justify-around items-center">
+    <a href="#" class="text-red-500">
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0h10"></path>
+      </svg>
+      <span class="block text-xs">Explore</span>
+    </a>
+    <a href="#" class="text-gray-500 hover:text-red-500">
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 12.864l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+      </svg>
+      <span class="block text-xs">Wishlists</span>
+    </a>
+    <a href="#" class="text-gray-500 hover:text-red-500">
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2c-3.866 0-7 3.134-7 7 0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7zm0 10a3 3 0 100-6 3 3 0 000 6z"></path>
+      </svg>
+      <span class="block text-xs">Trips</span>
+    </a>
+    <a href="#" class="text-gray-500 hover:text-red-500">
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.794M3 12c0-4.418 4.03-8 9-8a9.863 9.863 0 014.255.794"></path>
+      </svg>
+      <span class="block text-xs">Messages</span>
+    </a>
+    <a href="#" class="text-gray-500 hover:text-red-500">
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.766 6.879 2.004M15.121 2.196A13.937 13.937 0 0112 8c-2.5 0-4.847-.766-6.879-2.004M12 10a2 2 0 100-4 2 2 0 000 4z"></path>
+      </svg>
+      <span class="block text-xs">Profile</span>
+    </a>
+  </nav>
+
+  <!-- Firebase & Dynamic Property Loading -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script>
+    // Your Firebase configuration (replace with your actual config)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBe9a58zaQCrBSGeWwcIVa_PnZABoH6zV4",
+      authDomain: "tudds-ccd0wn.firebaseapp.com",
+      databaseURL: "https://tudds-ccd0wn-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "tudds-ccd0wn",
+      storageBucket: "tudds-ccd0wn.appspot.com",
+      messagingSenderId: "786974954352",
+      appId: "1:786974954352:web:8cdc279d2e7dc1fb9bb5b5",
+      measurementId: "G-E1RZQYQXQN"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    /**
+     * Fetch real properties from the "galaproperty" collection and prepend them.
+     */
+    async function fetchRealProperties(category = "All") {
+      const container = document.querySelector('.grid');
+      try {
+        let query = db.collection("galaproperty");
+        if (category !== "All") {
+          query = query.where("category", "==", category);
+        }
+        const snapshot = await query.get();
+        if (!snapshot.empty) {
+          let realPropsHTML = "";
+          snapshot.forEach(doc => {
+            const data = doc.data();
+            realPropsHTML += `
+              <div class="property-card">
+                <a href="property.html?id=${doc.id}">
+                  <img src="${data.imageUrl}" alt="${data.name}" class="property-image">
+                  <div class="property-details">
+                    <h3 class="text-base font-semibold">${data.name}</h3>
+                    <p class="text-gray-600 text-sm">${data.location} · ₱${data.price}</p>
+                    <span class="text-sm font-semibold">⭐ ${data.rating}</span>
+                  </div>
+                </a>
+              </div>
+            `;
+          });
+          // Prepend real properties to the container
+          container.innerHTML = realPropsHTML + container.innerHTML;
+        }
+      } catch (error) {
+        console.error("Error fetching real properties:", error);
+      }
+    }
+
+    /**
+     * Load placeholder properties (for visualization) and append them.
+     */
+    function loadPlaceholderProperties() {
+      const container = document.querySelector('.grid');
+      let placeholdersHTML = "";
+      const images = [
+        "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxITEhUSEBIWFRUVFhYVFRYWFRYVFRUWFRUXFhUVFxgYHSggGBolGxUXITEiJTUrLi4vFx8zODMtNygtLisBCgoKDg0OGhAQGi0dHR0vLS0tLS0tLS0tLS0tLS0rLS0tLS0tLS0tLS0tLS0tLS0rLS0tLS0tLS0tLS0tLS0tLf/AABEIAPUAzgMBIgACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAAEAQIDBQYABwj/xABHEAACAQIEAgcEBQoEBQUBAAABAhEAAwQSITFBUQUGEyJhcZEygaGxI0KywfAHFTNSYnJzktHhFIKz8SRjg6LCQ1Ojw9I0/8QAGgEAAwEBAQEAAAAAAAAAAAAAAQIDAAQFBv/EACcRAAICAgICAgEEAwAAAAAAAAABAhEDMRIhQVEygQQiwdHwE0Jh/9oADAMBAAIRAxEAPwC1rqSurzKOsdS02lFMgDqUUgpaJhwpwpgp1EA8GlplLNGjWOBpwNMFLNZI1jwaeDUQpZomJ1anhqHDU4NWMEBqcGocNTw1YNk4NPBocNTw1Y1kwNOBqENTgaFGJgacDUINOBrGCFNSqaGU1KpoBMnSV1dSoAtKKSlFEAtOFNpwomFpaSlpgC0tJXUTWOFLTRS0aNYs11Npa1AscDTgajpa1GslBpwaoZpQaFBsnDU4NUANODUaNYQGp4ahw1ODUKNYQGp4NQBqkU1qNZOpqRTUCmpFNCg2ZwpTSK0nQdqwwZb3uPzqq6RsKrkLqOFLx8msApRS5aWKxhBTxXAUsUwDgKWKUClijQBIpYpQKWKKQBKQ06K6KajWMpaWK6tQLEpa6uo0Czq6urqNGsWaUNTa6tRrJA1PDVDNOBocTWTq1SK1DA1IprUawpTUqmhlapFNChrBhbcbQfhUdyeII+PyqzApGWojlSEB2pDaqxe0DuKiNgcCR8fnTAsDyV2WijYPgfhTSnMEfH5UyQAeKWKly8q7JRARgV0VJlrstEFjIroqTLXZaICMikipStIVpkAiilin5a6KKQCOK6KflpIpqBYyKSKkimkVqBY2nChcZhS8QxWPeD5jjRSLAAHDwA89hWo1jhTgaZSg0eJrJVapVahwacGocNTw1YNk4NPBocNTw1Y1kwNOBqENTgaFGJgacDUINOBrGCFNSqaGU1KpoBMnSV1dSoAtKKSlFEA==",
+        "https://cf.bstatic.com/xdata/images/hotel/max1024x768/287595317.jpg?k=d426eaf79d39f9184f6bd118fca4d59acf5965b4e68a9091b47c653766420ff0&o=&hp=1",
+        "https://www.theexcelsiorhotel.com.ph/wp-content/uploads/2023/11/Two-bedroom-Suite-2-scaled.webp"
+      ];
+      for (let i = 0; i < 10; i++) {
+        placeholdersHTML += `
+          <div class="property-card">
+            <a href="property.html?id=placeholder-${i+1}">
+              <img src="${images[i % images.length]}" alt="Property ${i+1}" class="property-image">
+              <div class="property-details">
+                <h3 class="text-base font-semibold">Property ${i+1}</h3>
+                <p class="text-gray-600 text-sm">Location ${i+1} · ₱${2000 + i * 100}</p>
+              </div>
+            </a>
+          </div>
+        `;
+      }
+      container.innerHTML += placeholdersHTML;
+    }
+
+    /**
+     * Display properties by first fetching real properties, then appending placeholders.
+     */
+    async function displayProperties(category = "All") {
+      const container = document.querySelector('.grid');
+      container.innerHTML = ""; // Clear previous listings
+      await fetchRealProperties(category);
+      loadPlaceholderProperties();
+    }
+
+    /**
+     * Filter listings based on category (can be extended for tab filtering).
+     */
+    function filterListings(category) {
+      displayProperties(category);
+    }
+
+    // Load properties on window load.
+    window.onload = () => {
+      displayProperties();
+    };
+  </script>
+</body>
+</html>
