@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Host Your Property</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <style>
+        body { font-family: sans-serif; }
+        .input-field {
+            border: 1px solid #e2e8f0; /* Tailwind gray-200 */
+            border-radius: 0.375rem; /* Tailwind rounded-md */
+            padding: 0.75rem; /* Tailwind p-3 */
+            width: 100%;
+            margin-bottom: 0.75rem; /* Tailwind mb-3 */
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6; /* Tailwind blue-500 */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* Tailwind blue-500 ring */
+        }
+        .textarea-field {
+            border: 1px solid #e2e8f0; /* Tailwind gray-200 */
+            border-radius: 0.375rem; /* Tailwind rounded-md */
+            padding: 0.75rem; /* Tailwind p-3 */
+            width: 100%;
+            margin-bottom: 0.75rem; /* Tailwind mb-3 */
+            resize: vertical; /* Allow vertical resizing */
+        }
+        .textarea-field:focus {
+            outline: none;
+            border-color: #3b82f6; /* Tailwind blue-500 */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* Tailwind blue-500 ring */
+        }
+        .file-input {
+            margin-bottom: 0.75rem; /* Tailwind mb-3 */
+        }
+        .file-input::-webkit-file-upload-button {
+            background-color: #3b82f6; /* Tailwind blue-500 */
+            color: white;
+            padding: 0.5rem 1rem; /* Tailwind py-2 px-4 */
+            border: none;
+            border-radius: 0.375rem; /* Tailwind rounded-md */
+            cursor: pointer;
+        }
+        .file-input::-webkit-file-upload-button:hover {
+            background-color: #2563eb; /* Tailwind blue-700 */
+        }
+
+        .image-preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem; /* Tailwind gap-2 */
+            margin-bottom: 0.75rem; /* Tailwind mb-3 */
+        }
+
+        .image-preview {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 0.375rem; /* Tailwind rounded-md */
+            border: 1px solid #e2e8f0; /* Tailwind gray-200 */
+        }
+        .video-preview {
+            max-width: 100%;
+            margin-bottom: 0.75rem; /* Tailwind mb-3 */
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-bold mb-4 text-gray-800">Host Your Property</h1>
+
+        <form id="hostingForm" class="space-y-4">
+            <!-- Property Details Section -->
+            <section class="bg-white p-4 rounded-md shadow-sm">
+                <h2 class="text-xl font-semibold mb-3 text-gray-700">Property Details</h2>
+
+                <div>
+                    <label for="propertyName" class="block text-gray-700 text-sm font-bold mb-2">Property Name</label>
+                    <input type="text" id="propertyName" name="propertyName" class="input-field" placeholder="Enter property name" required>
+                </div>
+
+                <div>
+                    <label for="propertyDescription" class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+                    <textarea id="propertyDescription" name="propertyDescription" class="textarea-field" rows="4" placeholder="Describe your property" required></textarea>
+                </div>
+
+                <div>
+                    <label for="propertyType" class="block text-gray-700 text-sm font-bold mb-2">Property Type</label>
+                    <select id="propertyType" name="propertyType" class="input-field" required>
+                        <option value="">Select Type</option>
+                        <option value="Apartment">Apartment</option>
+                        <option value="Hotel">Hotel</option>
+                        <option value="Cabin">Cabin</option>
+                        <option value="Resort">Resort</option>
+                        <option value="Condominium">Condominium</option>
+                        <option value="Lakefront">Lakefront</option>
+                        <option value="Farm">Farm</option>
+                        <option value="Icon">Iconic Stay</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="propertyCategory" class="block text-gray-700 text-sm font-bold mb-2">Category</label>
+                    <select id="propertyCategory" name="propertyCategory" class="input-field" required>
+                        <option value="">Select Category</option>
+                        <option value="Apartments">Apartments</option>
+                        <option value="Hotels">Hotels</option>
+                        <option value="Resorts">Resorts</option>
+                        <option value="Condominium">Condominium</option>
+                        <option value="Cabins">Cabins</option>
+                        <option value="Lakefront">Lakefront</option>
+                        <option value="Farms">Farms</option>
+                        <option value="Icons">Icons</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="propertyLocation" class="block text-gray-700 text-sm font-bold mb-2">Location (Full Address)</label>
+                    <input type="text" id="propertyLocation" name="propertyLocation" class="input-field" placeholder="Enter full address" required>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="guests" class="block text-gray-700 text-sm font-bold mb-2">Guests</label>
+                        <input type="number" id="guests" name="guests" class="input-field" placeholder="Max Guests" min="1" required>
+                    </div>
+                    <div>
+                        <label for="bedrooms" class="block text-gray-700 text-sm font-bold mb-2">Bedrooms</label>
+                        <input type="number" id="bedrooms" name="bedrooms" class="input-field" placeholder="Bedrooms" min="0" required>
+                    </div>
+                    <div>
+                        <label for="bathrooms" class="block text-gray-700 text-sm font-bold mb-2">Bathrooms</label>
+                        <input type="number" id="bathrooms" name="bathrooms" class="input-field" placeholder="Bathrooms" min="0" required>
+                    </div>
+                    <div>
+                        <label for="pricePerNight" class="block text-gray-700 text-sm font-bold mb-2">Price per Night (₱)</label>
+                        <input type="number" id="pricePerNight" name="pricePerNight" class="input-field" placeholder="Price" min="0" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Amenities</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label><input type="checkbox" name="amenities" value="WiFi" class="mr-2"> WiFi</label></div>
+                        <div><label><input type="checkbox" name="amenities" value="Kitchen" class="mr-2"> Kitchen</label></div>
+                        <div><label><input type="checkbox" name="amenities" value="Parking" class="mr-2"> Parking</label></div>
+                        <div><label><input type="checkbox" name="amenities" value="Pool" class="mr-2"> Pool</label></div>
+                        <div><label><input type="checkbox" name="amenities" value="TV" class="mr-2"> TV</label></div>
+                        <div><label><input type="checkbox" name="amenities" value="Air Conditioning" class="mr-2"> Air Conditioning</label></div>
+                        <div><label><input type="checkbox" name="amenities" value="Heating" class="mr-2"> Heating</label></div>
+                        <div><label><input type="checkbox" name="amenities" value="Washer" class="mr-2"> Washer</label></div>
+                        <div><label><input type="checkbox" name="amenities" value="Dryer" class="mr-2"> Dryer</label></div>
+                        <div><label><input type="checkbox" name="amenities" value="Iron" class="mr-2"> Iron</label></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Media Upload Section -->
+            <section class="bg-white p-4 rounded-md shadow-sm">
+                <h2 class="text-xl font-semibold mb-3 text-gray-700">Media</h2>
+
+                <div>
+                    <label for="propertyImages" class="block text-gray-700 text-sm font-bold mb-2">Property Images (Up to 10)</label>
+                    <input type="file" id="propertyImages" name="propertyImages" class="file-input" accept="image/*" multiple>
+                    <div id="imagePreview" class="image-preview-container">
+                        <!-- Image previews will be shown here -->
+                    </div>
+                </div>
+
+                <div>
+                    <label for="propertyVideo" class="block text-gray-700 text-sm font-bold mb-2">Property Video (Max 60 seconds)</label>
+                    <input type="file" id="propertyVideo" name="propertyVideo" class="file-input" accept="video/*">
+                    <video id="videoPreview" class="video-preview" controls style="display: none;"></video>
+                </div>
+            </section>
+
+            <!-- Host Information (Optional - can be expanded or removed if using auth) -->
+            <section class="bg-white p-4 rounded-md shadow-sm">
+                <h2 class="text-xl font-semibold mb-3 text-gray-700">Your Information (Optional)</h2>
+                <div>
+                    <label for="hostName" class="block text-gray-700 text-sm font-bold mb-2">Your Name</label>
+                    <input type="text" id="hostName" name="hostName" class="input-field" placeholder="Your Name">
+                </div>
+                <div>
+                    <label for="hostContact" class="block text-gray-700 text-sm font-bold mb-2">Contact Email/Phone</label>
+                    <input type="text" id="hostContact" name="hostContact" class="input-field" placeholder="Email or Phone">
+                </div>
+            </section>
+
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                List Property
+            </button>
+        </form>
+
+        <div id="formMessage" class="mt-4 text-green-500 font-semibold" style="display: none;">
+            Property listed successfully!
+        </div>
+        <div id="formError" class="mt-4 text-red-500 font-semibold" style="display: none;">
+            Error listing property. Please try again.
+        </div>
+
+    </div>
+
+    <!-- Firebase Initialization and Form Script -->
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-storage.js"></script>
+
+    <script>
+        // Firebase configuration (replace with your actual config)
+        const firebaseConfig = {
+          apiKey: "AIzaSyBe9a58zaQCrBSGeWwcIVa_PnZABoH6zV4",
+          authDomain: "tudds-ccd0wn.firebaseapp.com",
+          databaseURL: "https://tudds-ccd0wn-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "tudds-ccd0wn",
+          storageBucket: "tudds-ccd0wn.appspot.com",
+          messagingSenderId: "786974954352",
+          appId: "1:786974954352:web:339d9a244703877b9bb5b5",
+          measurementId: "G-01B9K2FSBQ"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storageRef = firebase.storage().ref();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const hostingForm = document.getElementById('hostingForm');
+            const propertyImagesInput = document.getElementById('propertyImages');
+            const imagePreviewContainer = document.getElementById('imagePreview');
+            const propertyVideoInput = document.getElementById('propertyVideo');
+            const videoPreviewElement = document.getElementById('videoPreview');
+            const formMessage = document.getElementById('formMessage');
+            const formError = document.getElementById('formError');
+
+            // Image Preview Functionality
+            propertyImagesInput.addEventListener('change', (event) => {
+                imagePreviewContainer.innerHTML = ''; // Clear previous previews
+                const files = event.target.files;
+                if (files && files.length <= 10) { // Limit to 10 images
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.classList.add('image-preview');
+                            imagePreviewContainer.appendChild(img);
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                } else if (files.length > 10) {
+                    alert("You can upload a maximum of 10 images.");
+                    propertyImagesInput.value = ''; // Clear input
+                }
+            });
+
+            // Video Preview Functionality
+            propertyVideoInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const videoURL = URL.createObjectURL(file);
+                    videoPreviewElement.src = videoURL;
+                    videoPreviewElement.style.display = 'block';
+                } else {
+                    videoPreviewElement.style.display = 'none';
+                    videoPreviewElement.src = '';
+                }
+            });
+
+
+            hostingForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                formMessage.style.display = 'none'; // Hide previous messages
+                formError.style.display = 'none';
+
+                const propertyName = hostingForm.propertyName.value;
+                const propertyDescription = hostingForm.propertyDescription.value;
+                const propertyType = hostingForm.propertyType.value;
+                const propertyCategory = hostingForm.propertyCategory.value;
+                const propertyLocation = hostingForm.propertyLocation.value;
+                const guests = hostingForm.guests.value;
+                const bedrooms = hostingForm.bedrooms.value;
+                const bathrooms = hostingForm.bathrooms.value;
+                const pricePerNight = hostingForm.pricePerNight.value;
+                const amenitiesCheckboxes = document.querySelectorAll('input[name="amenities"]:checked');
+                const amenities = Array.from(amenitiesCheckboxes).map(cb => cb.value);
+                const propertyImagesFiles = propertyImagesInput.files;
+                const propertyVideoFile = propertyVideoInput.files[0];
+                const hostName = hostingForm.hostName.value;
+                const hostContact = hostingForm.hostContact.value;
+
+
+                try {
+                    const imageUrls = [];
+                    if (propertyImagesFiles && propertyImagesFiles.length > 0) {
+                        for (let i = 0; i < propertyImagesFiles.length; i++) {
+                            const imageFile = propertyImagesFiles[i];
+                            const imagePath = `propertyImages/${Date.now()}-${imageFile.name}`;
+                            const imageUploadTask = storageRef.child(imagePath).put(imageFile);
+                            const snapshot = await imageUploadTask;
+                            const downloadURL = await snapshot.ref.getDownloadURL();
+                            imageUrls.push(downloadURL);
+                        }
+                    }
+
+                    let videoUrl = null;
+                    if (propertyVideoFile) {
+                        const videoPath = `propertyVideos/${Date.now()}-${propertyVideoFile.name}`;
+                        const videoUploadTask = storageRef.child(videoPath).put(propertyVideoFile);
+                        const snapshot = await videoUploadTask;
+                        videoUrl = await snapshot.ref.getDownloadURL();
+                    }
+
+                    await db.collection('galaproperty').add({
+                        propertyName: propertyName,
+                        propertyDescription: propertyDescription,
+                        propertyType: propertyType,
+                        category: propertyCategory,
+                        propertyLocation: propertyLocation,
+                        guests: parseInt(guests),
+                        bedrooms: parseInt(bedrooms),
+                        bathrooms: parseInt(bathrooms),
+                        propertyPrice: parseInt(pricePerNight),
+                        amenities: amenities,
+                        imageUrls: imageUrls,
+                        videoUrl: videoUrl,
+                        hostName: hostName || null, // Optional host info
+                        hostContact: hostContact || null,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp() // Add timestamp
+                    });
+
+                    formMessage.style.display = 'block';
+                    hostingForm.reset();
+                    imagePreviewContainer.innerHTML = ''; // Clear image previews
+                    videoPreviewElement.style.display = 'none'; // Hide video preview
+                    videoPreviewElement.src = '';
+
+                } catch (error) {
+                    console.error("Error listing property: ", error);
+                    formError.style.display = 'block';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
